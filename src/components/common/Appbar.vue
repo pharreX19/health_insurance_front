@@ -1,10 +1,10 @@
 <template>
   <nav>
-    <v-app-bar absolute flat color="cyan darken-3" dark app>
-      <v-app-bar-nav-icon @click="openDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title><span class="font-weight-light">Health</span> Insurance</v-toolbar-title>
+    <v-app-bar fixed flat color="cyan darken-3" dark app>
+      <v-app-bar-nav-icon v-if="isLoggedOut" @click="openDrawer"></v-app-bar-nav-icon>
+      <v-toolbar-title style="cursor:pointer" @click="toHome"><span class="font-weight-light">Health</span> Insurance</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="cyan darken-3" depressed>
+      <v-btn v-if="isLoggedOut" color="cyan darken-3" depressed @click="signout">
         signout
         <v-icon right>mdi-account</v-icon>
       </v-btn>
@@ -20,7 +20,7 @@
             <v-list-item-subtitle>Admin</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
         <v-list>
           <v-list-item v-for="link in links" :key="link.title" link router :to="link.route">
             <v-list-item-icon>
@@ -37,12 +37,13 @@
 </template>
 
 <script>
+import { store } from '../../store';
 export default {
   data() {
     return {
       drawer: null,
       links: [
-        {"title": "Dashboard", "icon": "mdi-view-dashboard", "route": "/"},
+        {"title": "Home", "icon": "mdi-view-dashboard", "route": "/"},
         {"title": "Companies", "icon": "mdi-forum", "route": "/companies"},
         {"title": "Policies", "icon": "mdi-view-dashboard", "route": "/policies"},
         {"title": "Subscribers", "icon": "mdi-view-dashboard", "route": "/subscribers"},
@@ -50,15 +51,29 @@ export default {
         {"title": "Limit Groups", "icon": "mdi-view-dashboard", "route": "/limit-groups"},
         {"title": "Episodes", "icon": "mdi-view-dashboard", "route": "/episodes"},
         {"title": "Service Providers", "icon": "mdi-view-dashboard", "route": "/service-providers"},
+        {"title": "Roles", "icon": "mdi-view-dashboard", "route": "/roles"},
       ]
     };
   },
   methods: {
     openDrawer() {
       this.drawer = !this.drawer;
-      console.log(this.drawer);
     },
+    toHome(){
+      this.$router.push('/');
+    },
+    signout(){
+      this.$auth.logout().then(() => {
+        store.commit('clear_user');
+      });
+      // this.$store.dispatch('auth/logout');
+    }
   },
+  computed: {
+    isLoggedOut(){
+      return this.$store.state.user;
+    }
+  }
 };
 </script>
 

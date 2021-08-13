@@ -1,0 +1,114 @@
+<v-row>
+      <v-col cols="12" md="4">
+        <v-card class="pa-3" flat>
+          <v-avatar size="100" class="text-center">
+            <img
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              :alt="subscriber.name"
+            />
+          </v-avatar>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ subscriber.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{
+                subscriber.plan.name
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.national_id
+              }}</v-list-item-title>
+              <v-list-item-subtitle>National ID</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ subscriber.passport }}</v-list-item-title>
+              <v-list-item-subtitle>Passport</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.work_permit
+              }}</v-list-item-title>
+              <v-list-item-subtitle>Work permit</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.country
+              }}</v-list-item-title>
+              <v-list-item-subtitle>Country</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+
+      <v-col>
+        <v-card class="mx-2 pa-3" flat style="height:100%">
+          <v-card-title>Company</v-card-title>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.company.name
+              }}</v-list-item-title>
+              <v-list-item-subtitle>Name</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.company.registration
+              }}</v-list-item-title>
+              <v-list-item-subtitle>Registration</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                subscriber.company.contact
+              }}</v-list-item-title>
+              <v-list-item-subtitle>Contact No.</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+
+      <v-col>
+        <v-card class="pa-3" flat>
+          <v-card-title style="color:green">MVR {{subscriber.subscriptions[0].plan_remaining}}</v-card-title>
+          <v-card-subtitle>Policy Remaining</v-card-subtitle>
+        </v-card>
+
+        <v-card class="mt-2 pa-3" flat>
+          <v-card-title style="color:green">{{subscriber.subscriptions[0].expiry_date}}</v-card-title>
+          <v-card-subtitle>Policy Expiry Date <span style="color:green">(active)</span> </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+    <!-- <v-col cols="12" md="6"> -->
+    <!-- <subscriber-summary></subscriber-summary> -->
+    <!-- </v-col> -->
+
+    <v-row class="mt-5">
+      <v-col cols="12">
+        <v-card flat>
+          <v-tabs v-model="tab" class="white black--text">
+            <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <v-tab-item v-for="(item, index) in items" :key="item.tab">
+              <v-card flat class="pa-5">
+                <v-card-text v-if="index === 0">
+                  <subscriber-services :services="services"></subscriber-services>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-card>
+      </v-col>
+    </v-row>

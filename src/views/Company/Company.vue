@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-layout>
-      <v-row>
-        <v-col cols="12" sm="6">
+      <v-row class="d-flex" style="flex-direction:row">
+        <v-col cols="12" md="6" class="flex-grow-1">
           <v-card class="pa-3" flat>
             <v-layout>
               <v-row>
@@ -35,31 +35,36 @@
             </v-layout>
           </v-card>
         </v-col>
+        <v-col cols="12" md="6" class="flex-grow-1">
+          <company-summary></company-summary>
+        </v-col>
       </v-row>
     </v-layout>
     <v-layout class="mt-5">
       <v-row>
         <v-col cols="12">
-          <v-card flat>
-            <v-tabs v-model="tab" class="white black--text">
+          <v-card flat  v-if="!test">
+            <div> 
+              <v-tabs v-model="tab" class="white black--text">
               <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
               <v-tab-item v-for="(item, index) in items" :key="item.tab">
                 <v-card flat class="pa-5">
-                  <v-card-text v-if="index === 0">
-                      <company-summary></company-summary>
-                    </v-card-text>
-                    <v-card-text v-if="index === 1">
+                    <v-card-text v-if="index === 0">
                       <company-episodes></company-episodes>
                     </v-card-text>
-                    <v-card-text v-if="index === 2">
+                    <v-card-text v-if="index === 1">
                       <company-subscribers></company-subscribers>
                     </v-card-text>
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
+            </div>
           </v-card>
+          <div class="pa-2 font-weight-regular"  v-else >
+              Company not subscribed to any insurance policies<span class="blue--text subscribe"> subscribe </span>now!
+            </div>
         </v-col>
       </v-row>
     </v-layout>
@@ -74,9 +79,10 @@ import CompanyDialog from './CompanyDialog.vue';
 export default {
   components: { CompanySubscribers, CompanyEpisodes, CompanySummary, CompanyDialog },
   data() {
-    return {    
+    return {   
+      test: false, 
       tab: null,
-      items: ["summary", "episodes", "subscribers"],
+      items: ["episodes", "subscribers"],
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       
     };
@@ -84,5 +90,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

@@ -20,9 +20,9 @@
     </v-container>
 
     <v-navigation-drawer
-      v-model="drawer"
+      right
       absolute
-      temporary
+      permanent
     >
       <v-list-item>
         <v-list-item-avatar>

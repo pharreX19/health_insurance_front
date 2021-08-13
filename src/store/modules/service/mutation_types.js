@@ -1,0 +1,8 @@
+    export const SET_SERVICES  = 'SET_SERVICES';
+    export const SET_SERVICE  = 'SET_SERVICE';
+    export const ADD_SERVICE  = 'ADD_SERVICE';
+    export const REMOVE_SERVICE  = 'REMOVE_SERVICE';
+    export const UPDATE_SERVICE  = 'UPDATE_SERVICE';
+    export const SET_SERVICE_INSURANCE_DETAILS  = 'SET_SERVICE_INSURANCE_DETAILS';
+    export const SET_SERVICE_TYPES  = 'SET_SERVICE_TYPES';
+    export const SET_SERVICE_LIMIT_GROUPS  = 'SET_SERVICE_LIMIT_GROUPS';

@@ -1,4 +1,4 @@
-import {checkResponse, post, get} from '../../../services/api';
+import {checkResponse, post, get, patch} from '../../../services/api';
 import * as mutation_types from './mutation_types';
 
 export const get_subscribers = ({commit}) => {
@@ -27,6 +27,15 @@ export const create_subscriber = ({commit}, payload) => {
     });
    })
 }
+
+
+export const update_subscriber = (_, payload) => {
+    patch(`subscribers/${payload.id}`, payload).then(checkResponse).then((response)=>{
+        console.log(response);
+        // commit(mutation_types.UPD, response.data.data);
+    }).catch((error) => {console.log(error)});
+}
+
 
 export const search_subscriber = ({commit}, payload) => {
     get(`subscribers/search/${payload}`).then(checkResponse).then((response)=>{

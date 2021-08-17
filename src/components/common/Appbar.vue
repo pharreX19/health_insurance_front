@@ -16,8 +16,8 @@
             <img src="https://randomuser.me/api/portraits/men/81.jpg">
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>John Doe </v-list-item-title>
-            <v-list-item-subtitle>Admin</v-list-item-subtitle>
+            <v-list-item-title>{{name}}</v-list-item-title>
+            <v-list-item-subtitle>MVR {{amount}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <!-- <v-divider></v-divider> -->
@@ -41,6 +41,8 @@ import { store } from '../../store';
 export default {
   data() {
     return {
+      name: this.$store.state.user.name,
+      amount: this.$store.state.user.amount,
       drawer: null,
       links: [
         {"title": "Home", "icon": "mdi-view-dashboard", "route": "/"},

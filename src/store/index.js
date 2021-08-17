@@ -54,7 +54,9 @@ export const store = new Vuex.Store({
     mutations: {
         set_user(state, data){
             localStorage.setItem('token', data.access_token)
-            state.user = data;
+            console.log('SERVICE PROVIDER IS', data.service_provider);
+            state.user = {...data.user, serviceProviderId: data.service_provider
+            };
         },
         clear_user(state){
             localStorage.removeItem('token');

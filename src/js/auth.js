@@ -61,11 +61,19 @@ export default class Auth{
         localStorage.removeItem('token');
     }
 
+    setUserDetails(user){
+        this.setPermissions(user.role.permissions);
+        this.setRole(user.role)
+        // this.setProvider(user.serviceProvider);
+    }
+
     login (payload){
         return new Promise((resolve, reject) => {
             post('/login', payload).then(checkResponse).then((response)=>{
-                this.setPermissions(response.data.user.role.permissions);
-                this.setRole(response.data.user.role)
+                this.setUserDetails(response.data.user);
+                // this.setPermissions(response.data.user.role.permissions);
+                // this.setRole(response.data.user.role)
+                console.log(response.data.user);
                 // commit(mutation_types.SET_USER, response);
                 return resolve(response.data);
             }).catch((error) => {

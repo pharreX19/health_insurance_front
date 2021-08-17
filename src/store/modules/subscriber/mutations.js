@@ -25,8 +25,3 @@ export const DELETE_SUBSCRIPTION = (state) => {
     console.log('REMOVED SUBSCRPTION');
     state.subscriber.subscriptions = [];
 }
-
-// export const UPDATE_SUBSCRIBER_SUBSCRIPTION = (state, data) => {
-//     console.log(state);
-//     console.log(data);
-// }

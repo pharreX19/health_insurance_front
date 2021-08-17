@@ -1,5 +1,12 @@
 <template>
   <v-container> 
+    <service-provider-select-dialog
+      v-if="selectProviderDialog"
+      :dialog.sync="selectProviderDialog"
+      @closeDialog="closeDialog"
+      @reLogin="reLogin"
+      :serviceProviders="serviceProviders"
+    ></service-provider-select-dialog>
     <v-row align="center" justify="center">
       <v-col>
         <div class="text-h4 font-weight-light text-center">
@@ -66,30 +73,47 @@
 import { store } from "../../store";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import validation_mixin from '../../mixins/validation_mixin';
+import ServiceProviderSelectDialog from './ServiceProviderSelectDialog.vue';
 export default {
+  components: { ServiceProviderSelectDialog },
   mixins:[validation_mixin],
   data() {
     return {
       email: null,
       password: null,
+      selectProviderDialog: false,
     };
   },
   validations() {
     return {
       email: { required, email },
       password: { required, minLength: minLength(5) },
+      service_provider_id: null,
+      serviceProviders: [],
     };
   },
   methods: {
     login() {
-      console.log(this.$v.password);
       this.$auth
-        .login({ email: this.email, password: this.password })
+        .login({ email: this.email, password: this.password, service_provider_id: this.service_provider_id })
         .then((response) => {
           store.commit("set_user", response);
+        }).catch((error) => {
+          if(error.response.data.errors.status === 409){
+            this.serviceProviders = error.response.data.errors.message.service_providers;
+            this.selectProviderDialog = true;
+          }
         });
       // this.$store.dispatch('auth/login', {email: this.email, password: this.password});
     },
+  closeDialog(){
+    this.selectProviderDialog = false;
+  },
+  reLogin(value){
+    this.service_provider_id = value;
+    this.closeDialog();
+    this.login();
+  }
   },
 };
 </script>

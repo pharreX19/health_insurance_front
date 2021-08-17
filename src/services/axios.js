@@ -1,5 +1,5 @@
 import axios from "axios";
-import Auth from "../js/auth";
+// import Auth from "../js/auth";
 import { router } from "../router/router";
 import {store} from '../store/index';
 
@@ -44,20 +44,28 @@ axios.interceptors.response.use(response => {
                 break;
 
             case 401:
-                console.log('401 error case');
-                new Auth().logout();
-                // localStorage.removeItem('token');
-                // localStorage.removeItem('user');
-                // router.replace({'path': '/login'});
+                error_msg = error.response.data.message || error.response.data.errors?.message.error;
+                // this.clearLocalStorage();
+                // router.push({name: 'login'});
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                // console.log(this.$route);
+                router.replace({'path': '/login'});
                 break;
 
             case 403:
-                console.log('403 error case');
+                error_msg = error.response.data.message;
                 break;
 
             case 404:
                 console.log('404 error case');
                 error_msg = 'No such record found in our database.'
+                break;
+
+            case 409:
+                if(!localStorage.getItem('serviceProvider')){
+                    error.config.showErrorSnackbar = false;
+                }
                 break;
 
             case 422:                

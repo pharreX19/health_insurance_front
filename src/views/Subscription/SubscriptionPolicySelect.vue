@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <page-title title="Choose a policy"></page-title>
-    <v-row style="height: 60vh" justify="center" align="center">
+    <v-row style="height: 60vh">
       <v-col cols="12" md="4" v-for="policy in policies" :key="policy.id">
         <policy-card @selectPolicy='selectPolicy(policy)' :policy="policy"></policy-card>
       </v-col>

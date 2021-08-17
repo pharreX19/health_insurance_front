@@ -1,8 +1,8 @@
 import {checkResponse, get, patch, post, remove} from '../../../services/api';
 import * as mutation_types from './mutation_types';
 
-export const get_companies = ({commit}) => {
-    get('companies').then(checkResponse).then((response)=>{
+export const get_companies = ({commit}, showLoader = true) => {
+    get('companies', {showLoader: showLoader}).then(checkResponse).then((response)=>{
         console.log(response)
         commit(mutation_types.SET_COMPANIES, response.data.data);
     }).catch((error) => {console.log(error)});

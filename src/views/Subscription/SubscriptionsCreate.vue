@@ -192,7 +192,7 @@
           <v-row>
             <v-col cols="12" md="4" class="pa-3" v-for="(method, index) in payment_methods" :key="index">
               <v-card @click="selectPaymentMethod(index)" :color="method === subscriber.payment_method ? 'grey lighten-4' : 'white'">
-                <v-card-subtitle>{{method}}</v-card-subtitle>
+                <v-card-subtitle>{{ capitalize(method) }}</v-card-subtitle>
               </v-card>
             </v-col>
           </v-row>
@@ -271,9 +271,9 @@ export default {
     subscribers_file: {},
     company_error: null,
     e6: 1,
-    payment_methods: ['Credit Card','Cash', 'Cheque', 'Credit', 'Online payment'],
+    payment_methods: ['credit_card','cash', 'cheque', 'credit', 'online_payment'],
     subscriber: {
-      payment_method: 'Online payment',
+      payment_method: 'online_payment',
       name: "",
       national_id: "",
       passport: "",
@@ -384,9 +384,11 @@ export default {
           this.subscribers = [];
         });
       }
-
-
     },
+    capitalize(value){
+      return (value.charAt(0).toUpperCase() + value.slice(1)).replaceAll('_', ' ')
+    },
+
     uploadSubscribersList(){
       let importFile = document.querySelector('#subscribers');
       this.subscribers_file = importFile.files[0];

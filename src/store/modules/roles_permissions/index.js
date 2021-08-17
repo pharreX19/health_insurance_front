@@ -35,6 +35,11 @@ export const role_permission = {
             remove(`roles/${id}`, {showLoader: true}).then(checkResponse).then(()=>{
                 commit(DELETE_ROLE, id);
             }).catch((error) => {console.log(error)});
+        },
+        attach_permission(_, payload){
+            post(`roles/${payload.roleId}/permissions/${payload.permissionId}`, null, {showLoader: false}).then(checkResponse).then(()=>{
+                // commit(DELETE_ROLE, id);
+            }).catch((error) => {console.log(error)});
         }
     },
     getters: {

@@ -22,8 +22,8 @@
         :expanded.sync="expanded"
       >
 
-        <template v-slot:item.total_amount="{ item }">
-          {{ getEpisodeTotalAmt(item) }}
+        <template v-slot:item.episode_total="{ item }">
+          MVR {{ getEpisodeTotalAmt(item) }}
         </template>
 
         <template v-slot:item.created_at="{ item }">
@@ -87,7 +87,7 @@ export default {
           value: "service_provider.name",
         },
         { text: "Memo number", value: "memo_number" },
-        { text: "Total amount", value: "total_amount" },
+        { text: "Episode total", value: "episode_total" },
         { text: "Status", value: "status" },
         { text: "Created at", value: "created_at" },
         { text: "", value: "data-table-expand" },
@@ -101,14 +101,14 @@ export default {
     },
     getEpisodeTotalAmt(services) {
         let total = 0;
-      console.log("====> ");
+      console.log("====>", services);
     //   services.services.forEach((service) => {
         //   total += 1;
-          console.log(services.services.reduce((a, b) => { 
-              return a + b.pivot.insurance_covered_limit;
-          }, 0));//service.pivot.insurance_covered_limit);
+          total = services.services.reduce((a, b) => { 
+              return parseFloat(a) + parseFloat(b.pivot.insurance_covered_limit) + parseFloat(b.pivot.aasandha_covered_limit) + parseFloat(b.pivot.self_covered_limit);
+          }, 0);//service.pivot.insurance_covered_limit);
     //   });
-      return total;
+      return total ; //total;
     //   return services.reduce((acc, service) => {
         // return acc + service.pivot.insurance_covered_limit;
     //   }, 0);
@@ -116,7 +116,10 @@ export default {
     },
     deleteItem(item){
         console.log('Delete', item);
-        this.$store.dispatch('episode_service/remove_service_from_episode', item.pivot.id);
+        this.$store.dispatch('episode_service/remove_service_from_episode', item.pivot.id).then(() => {
+          this.$store.dispatch("episode/get_episodes");
+        });
+        
     }
   },
 };

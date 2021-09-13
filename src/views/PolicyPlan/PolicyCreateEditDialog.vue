@@ -117,7 +117,7 @@ export default {
      console.log(this.isEdit);
     if (this.isEdit) {
       let temp =
-        this.$store.getters["policy/policy"];
+        this.$store.getters["policy/model"];
         this.policy = temp;
         temp.number_format.split('_').map((element) => {
           if(this.items.includes(element.toLowerCase())){
@@ -173,9 +173,9 @@ export default {
       }
       this.policy.number_format = this.number_format.join("_");
       if(this.isEdit){
-        this.$store.dispatch("policy/update_policy", this.policy);
+        this.$store.dispatch("policy/update_model", {url: 'policies', data: this.policy});
       }else{
-        this.$store.dispatch("policy/create_policy", this.policy);
+        this.$store.dispatch("policy/create_model", {url: 'policies', data: this.policy});
       }
       this.closeDialog();
     },

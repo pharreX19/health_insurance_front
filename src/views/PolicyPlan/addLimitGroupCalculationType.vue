@@ -55,12 +55,13 @@ export default {
         default: false
       }
     },
-    mounted(){
-        this.$store.dispatch('calculation_type/get_calculation_types');
+    beforeMount(){
+        this.$store.dispatch('calculation_type/get_models', '/service-limit-group-calculations', false);
     },
     computed: {
         calculation_types(){
-            return this.$store.getters['calculation_type/calculationTypes']
+          // console.log(this.$store.getters['calculation_type/models']);
+            return this.$store.getters['calculation_type/models']
         }
     },
     data(){
@@ -74,7 +75,7 @@ export default {
         this.$emit('closeDialog');
       },
       select_calculation_type(){
-        this.$emit('closeDialog', this.calculation_type);
+        this.$emit('closeDialog', {calculation_type: this.calculation_type, limit_total: this.limit_total});
       }
     }
 };

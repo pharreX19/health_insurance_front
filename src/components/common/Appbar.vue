@@ -1,6 +1,6 @@
 <template>
-  <nav>
-    <v-app-bar fixed flat color="cyan darken-3" dark app>
+  <div class="overflow-hidden">
+    <v-app-bar  fixed flat color="cyan darken-3" dark app>
       <v-app-bar-nav-icon v-if="isLoggedOut" @click="openDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="cursor:pointer" @click="toHome"><span class="font-weight-light">Health</span> Insurance</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -33,7 +33,7 @@
         </v-list>
       </template>
     </v-navigation-drawer>
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
         {"title": "Limit Groups", "icon": "mdi-view-dashboard", "route": "/limit-groups"},
         {"title": "Episodes", "icon": "mdi-view-dashboard", "route": "/episodes"},
         {"title": "Service Providers", "icon": "mdi-view-dashboard", "route": "/service-providers"},
-        {"title": "Roles", "icon": "mdi-view-dashboard", "route": "/roles"},
+        {"title": "User management", "icon": "mdi-view-dashboard", "route": "/roles"},
       ]
     };
   },

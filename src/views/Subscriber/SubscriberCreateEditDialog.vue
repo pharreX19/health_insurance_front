@@ -99,12 +99,12 @@ export default {
     },
   },
   beforeMount(){
-    this.$store.dispatch("company/get_companies", false);
-    this.subscriber = this.$store.getters["subscriber/subscriber"];
+    this.$store.dispatch("company/get_models", "companies", false);
+    this.subscriber = this.$store.getters["subscriber/model"];
   },
   computed: {
     companies(){
-      return this.$store.getters["company/companies"];
+      return this.$store.getters["company/models"];
     }
   },
   watch: {
@@ -136,7 +136,7 @@ export default {
     },
     updateSusbscriber(){
       this.subscriber.company_id = this.subscriber.company.id;
-      this.$store.dispatch("subscriber/update_subscriber", [this.subscriber]);
+      this.$store.dispatch("subscriber/update_model", {url: 'subscribers', data: [this.subscriber]});
       console.log(this.subscriber);
     }
   },

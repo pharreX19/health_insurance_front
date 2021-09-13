@@ -14,6 +14,7 @@ import {service_provider} from './modules/service_providers'
 import {serviceLimitGroup} from './modules/serviceLimitGroup'
 import {serviceType} from './modules/serviceType'
 import {role_permission} from './modules/roles_permissions'; 
+import {plan} from './modules/plan';
 import { router } from '../router/router';
 import createPersistedState from "vuex-persistedstate";
 
@@ -121,7 +122,8 @@ export const store = new Vuex.Store({
         service_provider,
         serviceLimitGroup,
         serviceType,
-        role_permission
+        role_permission,
+        plan
     }
 })
 

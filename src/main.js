@@ -24,6 +24,10 @@ let auth = new Auth();
 
 Vue.prototype.$auth = auth;
 
+Vue.filter('capitalize', function(value){
+  return (value.charAt(0).toUpperCase() + value.slice(1)).replaceAll('_', ' ')
+})
+
 new Vue({
   vuetify,
   router: router,

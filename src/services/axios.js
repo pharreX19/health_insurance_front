@@ -2,6 +2,8 @@ import axios from "axios";
 // import Auth from "../js/auth";
 import { router } from "../router/router";
 import {store} from '../store/index';
+import NProgress from 'nprogress';
+
 
 axios.defaults.baseURL = 'http://localhost:8000/api/v1/';
 
@@ -11,6 +13,9 @@ axios.defaults.showSuccessSnackbar = true;
 
 
 axios.interceptors.request.use(config => {
+    if(!NProgress.isStarted()){
+        NProgress.start();
+    }
     if(config.showLoader){
         store.dispatch('pending');
     }
@@ -24,7 +29,7 @@ axios.interceptors.request.use(config => {
 
 
 axios.interceptors.response.use(response => {
-    
+    NProgress.done();
     if(response.config.showSuccessSnackbar){
         store.dispatch('show_snackbar', {type: 'success', msg: response.data.success.message});
     }
@@ -36,6 +41,8 @@ axios.interceptors.response.use(response => {
     }
     return response;
 }, error => {
+    NProgress.done();
+
     let error_msg;
     if(error.response.status){
         switch(error.response.status){

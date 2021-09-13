@@ -1,5 +1,5 @@
-export const state = {
-    'companies': [],
-    'company': {}
-}
+// export const state = {
+//     'companies': [],
+//     'company': {}
+// }
 

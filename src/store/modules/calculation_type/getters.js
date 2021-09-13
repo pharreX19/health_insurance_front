@@ -1,5 +1,5 @@
-// import {state as serviceState} from './state';
+// // import {state as serviceState} from './state';
 
-export const calculationTypes = (state) => {
-    return state.calculation_types;
-}
+// export const calculationTypes = (state) => {
+//     return state.calculation_types;
+// }

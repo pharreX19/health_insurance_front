@@ -1,5 +1,5 @@
 <template>
-     <v-card class="pa-3 pl-5" style="height: 100%">
+     <v-card class="pa-3 pl-5" style="height: 93%">
           <v-row>
             <v-col cols="6" md="7" class="pl-4">
               <div class="text-h6 font-weight-light mb-2">
@@ -38,7 +38,7 @@
                   >
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <!-- <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title class="text-body-2 font-weight-light">{{
                     subscriber.work_permit
@@ -48,10 +48,10 @@
                     >Work permit</v-list-item-subtitle
                   >
                 </v-list-item-content>
-              </v-list-item>
+              </v-list-item> -->
             </v-col>
-            <v-col cols="6" md="4" align-self="center">
-              <v-avatar size="150" class="text-center">
+            <v-col cols="6" md="4" class="mt-12">
+              <v-avatar size="100" class="text-center">
                 <img
                   src="@/assets/profile.svg"
                   :alt="subscriber.name"

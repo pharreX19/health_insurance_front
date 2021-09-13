@@ -28,12 +28,19 @@ import PlanCard from "./components/PlanCard.vue";
 export default {
   components: { PageTitle, PlanCard },
   mounted() {
-    this.$store.dispatch("policy/get_policy", this.$route.params.id);
+    this.$store.dispatch("policy/get_model", `policies/${this.$route.params.id}?include=plans`);
   },
   computed: {
     policy() {
-      return this.$store.getters["policy/policy"];
+      return this.$store.getters["policy/model"];
     },
+  },
+  watch: {
+    policy(){
+      if(this.policy.plans.length === 1){ 
+        this.selectPlan(this.policy.plans[0]);
+      }
+    }
   },
   methods: {
     selectPlan(plan) {

@@ -2,6 +2,6 @@
 
 // import Vue from "vue"
 
-export const SET_COUNTRIES = (state, payload) => {
-    state.countries = payload;
-}
+// export const SET_COUNTRIES = (state, payload) => {
+//     state.countries = payload;
+// }

@@ -1,13 +1,13 @@
 <template>
   <v-row>
     <confirm-dialog
-    v-if="showConfirmDialog"
-    :dialog.sync="showConfirmDialog"
-    @closeDialog="closeDialog"
-    @confirmDelete ="confirmDelete"
+      v-if="showConfirmDialog"
+      :dialog.sync="showConfirmDialog"
+      @closeDialog="closeDialog"
+      @confirmDelete="confirmDelete"
     >
     </confirm-dialog>
-    
+
     <v-col cols="12">
       <v-card class="pa-5" flat>
         <v-data-table
@@ -23,12 +23,36 @@
             <v-icon small class="mr-2" @click.stop="editItem(item)">
               mdi-pencil
             </v-icon>
-            <v-icon small @click.stop="deleteItem(item)" color="red"> mdi-delete </v-icon>
+            <v-icon small @click.stop="deleteItem(item)" color="red">
+              mdi-delete
+            </v-icon>
           </template>
-          
+
           <template v-slot:item.created_at="{ item }">
-          {{ moment(item.created_at).format("DD-MM-YYYY") }}
-        </template>
+            {{ moment(item.created_at).format("MMMM D, YYYY") }}
+          </template>
+
+            <template v-slot:item.limit_total="{ item }">
+            MVR {{item.limit_total }}
+          </template>
+
+          <template v-slot:item.premium="{ item }">
+            MVR {{item.premium }}
+          </template>
+
+          <template v-slot:item.service_providers="{ item }">
+            <tr v-for="service_provider in item.service_providers" :key="service_provider.id">
+              <td>{{service_provider.name}}</td>
+            </tr>
+          </template>
+
+          <template v-slot:item.switch="{ item }">
+            <v-switch
+              @change="changeActiveStatus(item)"
+              v-model="item.active"
+              color="cyan darken-3"
+            ></v-switch>
+          </template>
         </v-data-table>
       </v-card>
     </v-col>
@@ -38,7 +62,7 @@
 
 <script>
 // import ServiceProviderCreateEditDialog from "../../views/ServiceProviders/ServiceProviderCreateEditDialog.vue";
-import ConfirmDialog from '../dialogs/ConfirmDialog.vue';
+import ConfirmDialog from "../dialogs/ConfirmDialog.vue";
 export default {
   components: {
     // ServiceProviderCreateEditDialog,
@@ -63,18 +87,21 @@ export default {
   data() {
     return {
       // showProviderDialog: false,
-      showConfirmDialog : false,
+      showConfirmDialog: false,
       item: null,
     };
   },
   methods: {
+    changeActiveStatus(item) {
+      this.$emit("changeActiveStatus", item);
+    },
     onClick: function (item) {
       // this.$store.commit('service_provider/SET_SERVICE_PROVIDER', value);
       this.$emit("onClick", item);
     },
     editItem(item) {
       // this.$store.commit('service_provider/SET_SERVICE_PROVIDER', item);
-      this.$emit('editItem', item);
+      this.$emit("editItem", item);
       // this.showProviderDialog = true;
       // this.$emit('editItem', item);
     },
@@ -83,16 +110,15 @@ export default {
       // this.$store.commit('service_provider/SET_SERVICE_PROVIDER', item);
       this.showConfirmDialog = true;
     },
-    confirmDelete(){
-      this.$emit('deleteItem', this.item);
+    confirmDelete() {
+      this.$emit("deleteItem", this.item);
       // this.$store.dispatch('service_provider/delete_service_providers', this.item.id)
       this.showConfirmDialog = false;
-
     },
-    closeDialog(){
+    closeDialog() {
       // this.showProviderDialog = false;
       this.showConfirmDialog = false;
-    }
+    },
   },
 };
 </script>

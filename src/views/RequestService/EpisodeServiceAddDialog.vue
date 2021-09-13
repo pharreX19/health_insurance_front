@@ -83,7 +83,7 @@
                   label="Aasandha"
                   prefix="MVR"
                   v-model="service.aasandha_covered_limit"
-                  :disabled="parseFloat(service.limit_total) < parseFloat(service_insurance_details.service_limit_group_total) + parseFloat(service.self_covered_limit)"                  
+                  :disabled="parseFloat(service.limit_total) < parseFloat(service_insurance_details.insurance_covered_limit) + parseFloat(service.self_covered_limit)"                  
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="4">
@@ -93,7 +93,7 @@
                   label="Self"
                   prefix="MVR"
                   v-model="service.self_covered_limit"
-                  :disabled="parseFloat(service.limit_total) < parseFloat(service_insurance_details.service_limit_group_total) + parseFloat(service.aasandha_covered_limit)"
+                  :disabled="parseFloat(service.limit_total) < parseFloat(service_insurance_details.insurance_covered_limit) + parseFloat(service.aasandha_covered_limit)"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -218,7 +218,15 @@ export default {
     },
     
     isServiceValidForProcessing(){
-      return this.service.limit_total != null &&  parseFloat(this.service.limit_total) <= parseFloat(this.service_insurance_details.insurance_covered_limit) + parseFloat(this.service.aasandha_covered_limit) + parseFloat(this.service.self_covered_limit);
+      if(this.service.limit_total != null){
+        if(parseFloat(this.service.limit_total) <= parseFloat(this.service_insurance_details.insurance_covered_limit)){
+          return true;
+        }else if(parseFloat(this.service.limit_total) == parseFloat(this.service_insurance_details.insurance_covered_limit) + parseFloat(this.service.aasandha_covered_limit) + parseFloat(this.service.self_covered_limit)){
+          return true;
+        }
+      }
+      return false;
+      // return this.service.limit_total != null &&  parseFloat(this.service.limit_total) <= parseFloat(this.service_insurance_details.insurance_covered_limit) + parseFloat(this.service.aasandha_covered_limit) + parseFloat(this.service.self_covered_limit);
     },
 
     add_service() {

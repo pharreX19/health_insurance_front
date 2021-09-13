@@ -1,17 +1,35 @@
-import * as actions from './actions';
-import * as getters from './getters';
-import * as mutations from './mutations';
-import {state} from './state';
+// import * as actions from './actions';
+// import * as getters from './getters';
+// import * as mutations from './mutations';
+// import {state} from './state';
 
-// import {checkResponse, get} from '../../../services/api';
+import {checkResponse, get} from '../../../services/api';
+// import { state } from '../service/state';
 // import * as mutation_types from './mutation_types';
+const SET_COUNTRIES  = 'SET_COUNTRIES';
 
 export const country = {
     namespaced: true, 
-    actions,
-    mutations,
-    getters,
-    state
+    actions: {
+        get_countries({commit}){
+            get('countries', {showLoader: false}).then(checkResponse).then((response)=>{
+                commit(SET_COUNTRIES, response.data.data);
+            }).catch((error) => {console.log(error)});
+        }
+    },
+    mutations: {
+        SET_COUNTRIES(state, payload){
+            state.countries = payload;
+        }
+    },
+    getters: {
+        countries(state){
+            return state.countries;
+        }
+    },
+    state: {
+        countries: [],
+    }
 } 
 
 // actions: {

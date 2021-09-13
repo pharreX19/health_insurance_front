@@ -1,6 +1,6 @@
-export const state = {
-    calculation_types: [],
-    // service: {},
-    // service_insurance_details: {}
-}
+// export const state = {
+//     calculation_types: [],
+//     // service: {},
+//     // service_insurance_details: {}
+// }
 

@@ -17,3 +17,11 @@ export const is = function (values) {
         return window.roles[role] ? true : false;
     });
 };
+
+export const Role = {
+    Admin: 'Admin',
+    Receptionist: 'Receptionist',
+    User: 'User',
+    Accountant: 'Accountant',
+    Employee: 'Employee'
+}

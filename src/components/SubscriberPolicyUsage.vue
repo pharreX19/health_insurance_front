@@ -23,8 +23,8 @@
       <div class="text-h6 font-weight-light mb-2">
         Policy usage
       </div>
-      <div class="subheading font-weight-light grey--text">
-        Last Campaign Performance
+      <!-- <div class="subheading font-weight-light grey--text">
+        MVR 300 remaining
       </div>
       <v-divider class="my-2"></v-divider>
       <v-icon
@@ -33,13 +33,34 @@
       >
         mdi-clock
       </v-icon>
-      <span class="text-caption grey--text font-weight-light">Last service received on 26 minutes ago</span>
+      <span class="text-caption grey--text font-weight-light">Last service received on 26 minutes ago</span> -->
+      <v-divider class="my-2"></v-divider>
+      <v-icon class="mr-2" small>
+        mdi-{{ isPolicyExpired() ? "exclamation" : "check" }}
+      </v-icon>
+      <span class="subheading grey--text font-weight-light"
+        >Policy is currently
+        <span
+          :class="[
+            isPolicyExpired() ? 'red--text' : 'green--text',
+            'font-weight-bold',
+          ]"
+          >{{ isPolicyExpired() ? "expired" : "active" }}</span
+        >
+      </span>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import moment from 'moment';
 export default {
+    props: {
+      subscriber: {
+        required: true,
+        type: Object
+      }
+    },
     data: () => ({
       labels: [
         '2021',
@@ -56,6 +77,14 @@ export default {
         310,
       ],
     }),
+    methods: {
+      isPolicyExpired() {
+      moment.now() >
+        moment(this.subscriber.subscriptions[0].expiry_date).format(
+          "MM-DD-YYYY"
+        );
+    },
+    }
   }
 </script>
 

@@ -192,7 +192,7 @@
           <v-row>
             <v-col cols="12" md="4" class="pa-3" v-for="(method, index) in payment_methods" :key="index">
               <v-card @click="selectPaymentMethod(index)" :color="method === subscriber.payment_method ? 'grey lighten-4' : 'white'">
-                <v-card-subtitle>{{ capitalize(method) }}</v-card-subtitle>
+                <v-card-subtitle>{{ method | capitalize }}</v-card-subtitle>
               </v-card>
             </v-col>
           </v-row>
@@ -385,9 +385,9 @@ export default {
         });
       }
     },
-    capitalize(value){
-      return (value.charAt(0).toUpperCase() + value.slice(1)).replaceAll('_', ' ')
-    },
+    // capitalize(value){
+    //   return (value.charAt(0).toUpperCase() + value.slice(1)).replaceAll('_', ' ')
+    // },
 
     uploadSubscribersList(){
       let importFile = document.querySelector('#subscribers');

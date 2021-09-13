@@ -1,16 +1,16 @@
 <template>
-<v-container>
-    <policy-create-edit-dialog
+  <v-container>
+    <policy-plan-create-edit-dialog
       v-if="showPolicyCreateDialog"
       :dialog.sync="showPolicyCreateDialog"
       @closeDialog="closeDialog"
       :isEdit="isEdit"
     >
-    </policy-create-edit-dialog>
-    <page-title title="Policies"></page-title>
+    </policy-plan-create-edit-dialog>
+    <page-title title="Policy plans"></page-title>
     <list-view-table
       :headers="headers"
-      :items="policies"
+      :items="plans.plans"
       :search="search"
       @onClick="onClick"
       @editItem="editItem"
@@ -19,34 +19,31 @@
     </list-view-table>
     <v-fab-transition>
       <v-btn
-        class="pa-8 mb-10"
+        class="pa-8"
         color="cyan darken-3"
         dark
         bottom
-        absolute
+        fixed
         right
         fab
         @click="createPolicy"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-      
     </v-fab-transition>
   </v-container>
 </template>
 
 <script>
-import ListViewTable from '../../components/common/ListViewTable.vue';
+import ListViewTable from "../../components/common/ListViewTable.vue";
 import PageTitle from "../../components/common/PageTitle.vue";
-import PolicyCreateEditDialog from "./PolicyCreateEditDialog.vue";
+import PolicyPlanCreateEditDialog from "./PolicyPlanCreateEditDialog.vue";
 export default {
-  components: { PageTitle, PolicyCreateEditDialog, ListViewTable },
-  mounted() {
-    this.$store.dispatch("policy/get_policies", true);
-  },
+  components: { PageTitle, PolicyPlanCreateEditDialog, ListViewTable },
+
   computed: {
-    policies() {
-      return this.$store.getters["policy/policies"];
+    plans() {
+      return this.$store.getters["plan/models"];
     },
   },
   data() {
@@ -56,9 +53,9 @@ export default {
       isEdit: false,
       headers: [
         { text: "Name", value: "name" },
-        { text: "Policy no. format", value: "number_format"},
+        { text: "Limit total", value: "limit_total" },
+        { text: "Premium", value: "premium" },
         { text: "Created at", value: "created_at" },
-        { text: "Active Plans", value: "plans.length" },
         // { text: "Street", value: "street" },
         { text: "Actions", value: "actions", sortable: false },
       ],
@@ -72,21 +69,24 @@ export default {
       this.isEdit = false;
       this.showPolicyCreateDialog = false;
     },
-    editItem(item){
+    editItem(item) {
       this.isEdit = true;
       this.showPolicyCreateDialog = true;
-      this.$store.commit('policy/SET_POLICY', item);
+      this.$store.commit("policy/SET_MODEL", item);
     },
-    deleteItem(item){
-      this.$store.dispatch("policy/delete_policy", item.id);
+    deleteItem(item) {
+      this.$store.dispatch("policy/delete_model", {
+        url: "policies",
+        id: item.id,
+      });
     },
-    onClick(item){
-      this.$store.commit('policy/SET_POLICY', item);
-      this.$router.push({name: 'policy-view', params: {id: item.id}});
+    onClick(item) {
+      this.$store.commit("policy/SET_MODEL", item);
+      this.$router.push({ name: "policy-view", params: { id: item.id } });
     },
-    viewPolicy(id){
-      this.$router.push({name: 'policy-view', params: {id: id}})
-    }
+    viewPolicy(id) {
+      this.$router.push({ name: "policy-view", params: { id: id } });
+    },
   },
 };
 </script>

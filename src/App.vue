@@ -1,9 +1,9 @@
 <template>
   <v-app id="app">
     <appbar></appbar>
-    <v-main class="grey lighten-5">
+    <v-main class="grey lighten-5 overflow-hidden">
       <loader :is-visible="loading" text="<small>loading</small>"></loader>
-      <v-container fluid class="mt-4">
+        <v-container fluid class="mt-4">
         <router-view></router-view>
         <!-- <v-btn dark @click="snackbar = true"> Open Snackbar </v-btn> -->
         <!-- <v-snackbar v-model="snackbar">

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-3" style="height: 100%">
+  <v-card class="pa-3" style="height: 93%">
     <!-- <v-sheet
             class="v-sheet--offset mx-auto"
             color="cyan"
@@ -61,27 +61,12 @@
           >
         </v-list-item-content>
       </v-list-item>
-
-      <v-divider class="my-2"></v-divider>
-      <v-icon class="mr-2" small>
-        mdi-{{ isPolicyExpired() ? "exclamation" : "check" }}
-      </v-icon>
-      <span class="subheading grey--text font-weight-light"
-        >Policy is currently
-        <span
-          :class="[
-            isPolicyExpired() ? 'red--text' : 'green--text',
-            'font-weight-bold',
-          ]"
-          >{{ isPolicyExpired() ? "expired" : "active" }}</span
-        >
-      </span>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import moment from "moment";
+// import moment from "moment";
 export default {
   props: {
     subscriber: {
@@ -90,12 +75,7 @@ export default {
     },
   },
   methods: {
-    isPolicyExpired() {
-      moment.now() >
-        moment(this.subscriber.subscriptions[0].expiry_date).format(
-          "MM-DD-YYYY"
-        );
-    },
+    
   },
 };
 </script>

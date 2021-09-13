@@ -28,9 +28,8 @@
           @click:row="onClick"
         >
           <template v-slot:item.actions="{ item }">
-            <v-icon small class="mr-2" @click.stop="editItem(item)">
-              mdi-pencil
-            </v-icon>
+            <v-icon small @click.stop="viewUsers(item)"> mdi-account </v-icon>
+            <v-icon small class="mx-2" @click.stop="editItem(item)">mdi-pencil</v-icon>
             <v-icon small @click.stop="deleteItem(item)" color="red"> mdi-delete </v-icon>
           </template>
           
@@ -72,11 +71,11 @@
     </v-row>
     <v-fab-transition>
       <v-btn
-        class="pa-8 mb-10"
+        class="pa-8"
         color="cyan darken-3"
         dark
         bottom
-        absolute
+        fixed
         right
         fab
         @click="createRole"
@@ -140,6 +139,11 @@ export default {
           this.role_permission.push(element.id)
         })
         console.log('now is', this.role_permission);
+    },
+    viewUsers(item){
+      console.log(item);
+      this.$router.push({name: 'role-users', params: {id: item.id}})
+      // this.$store.commit('role_permission/SET_ROLE', item);
     },
     editItem(item) {
         console.log('===>', item);

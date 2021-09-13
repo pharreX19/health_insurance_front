@@ -1,10 +1,10 @@
 
 <template>
   <v-card
-  class="py-5 px-3"
+  class="py-5 px-3 mx-2"
     height="230"
     style="cursor: pointer"
-    width="300"
+    width="250"
     flat
     @mouseover="is_active = !is_active"
     @mouseout="is_active = !is_active"

@@ -19,11 +19,11 @@
     </list-view-table>
     <v-fab-transition>
       <v-btn
-        class="pa-8 mb-10"
+        class="pa-8"
         color="cyan darken-3"
         dark
         bottom
-        absolute
+        fixed
         right
         fab
         @click="createProvider"

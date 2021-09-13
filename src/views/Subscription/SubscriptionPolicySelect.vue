@@ -16,11 +16,11 @@ export default {
   components: { PageTitle, PolicyCard },
 
   mounted() {
-    this.$store.dispatch("policy/get_policies", true);
+    this.$store.dispatch("policy/get_models", "policies?include=plans");
   },
   computed: {
     policies() {
-      return this.$store.getters["policy/policies"];
+      return this.$store.getters["policy/models"];
     },
   },
   data() {

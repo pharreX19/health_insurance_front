@@ -19,11 +19,11 @@
     </list-view-table>
     <v-fab-transition>
       <v-btn
-        class="pa-8 mb-10"
+        class="pa-8"
         color="cyan darken-3"
         dark
         bottom
-        absolute
+        fixed
         right
         fab
         @click="createCompany"
@@ -39,15 +39,17 @@
 import ListViewTable from "../../components/common/ListViewTable.vue";
 import PageTitle from "../../components/common/PageTitle.vue";
 import CompanyCreateEditDialog from './CompanyCreateEditDialog.vue';
+import * as endpoints from '../../constants/api_end_points';
+
 
 export default {
   components: { ListViewTable, PageTitle, CompanyCreateEditDialog },
   mounted() {
-    this.$store.dispatch("company/get_companies");
+    // this.$store.dispatch("company/get_companies");
   },
   computed: {
     companies() {
-      return this.$store.getters["company/companies"];
+      return this.$store.getters["company/models"];
     },
   },
   data() {
@@ -75,12 +77,12 @@ export default {
     },
     onClick() {},
     editItem(item) {
-      this.$store.commit('company/SET_COMPANY', item);
+      this.$store.commit('company/SET_MODEL', item);
       this.isEdit = true;
       this.showCompanyDialog = true;
     },
     deleteItem(item) {
-      this.$store.dispatch('company/delete_company', item.id)
+      this.$store.dispatch('company/delete_model', {url: endpoints.companies, id: item.id});
     },
   },
 };

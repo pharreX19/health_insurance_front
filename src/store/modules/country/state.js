@@ -1,4 +1,4 @@
-export const state = {
-    countries: [],
-}
+// export const state = {
+//     countries: [],
+// }
 

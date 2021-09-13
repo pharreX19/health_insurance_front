@@ -13,7 +13,7 @@
       @closeDialog="closeDialog"
     ></subscriber-create-edit-dialog>
 
-    <page-title title="Companies"></page-title>
+    <page-title title="Subscribers"></page-title>
     <list-view-table
       :headers="headers"
       :items="companies"
@@ -35,11 +35,11 @@ import SubscriberCreateEditDialog from './SubscriberCreateEditDialog.vue';
 export default {
   components: { ListViewTable, PageTitle, SubscriberCreateEditDialog },
   mounted() {
-    this.$store.dispatch("subscriber/get_subscribers");
+    // this.$store.dispatch("subscriber/get_models", 'subscribers');
   },
   computed: {
     companies() {
-      return this.$store.getters["subscriber/subscribers"];
+      return this.$store.getters["subscriber/models"];
     },
   },
   data() {
@@ -59,21 +59,23 @@ export default {
     };
   },
   methods: {
-    createCompany(){
-      this.showSubscriberDialog = true;
-      this.isEdit = false;
-    },
+    // createCompany(){
+    //   this.showSubscriberDialog = true;
+    //   this.isEdit = false;
+    // },
     closeDialog(){
       this.showSubscriberDialog = false;
     },
-    onClick() {},
+    onClick(item) {
+      this.$router.push({name: 'subscriber', params: {id: item.id}});
+    },
     editItem(item) {
-      this.$store.commit('subscriber/SET_SUBSCRIBER', item);
+      this.$store.commit('subscriber/SET_MODEL', item);
       this.isEdit = true;
       this.showSubscriberDialog = true;
     },
     deleteItem(item) {
-      this.$store.dispatch('company/delete_company', item.id)
+      this.$store.dispatch('subscriber/delete_model', {url: 'subscribers', id: item.id})
     },
   },
 };

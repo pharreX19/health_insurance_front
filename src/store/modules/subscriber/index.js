@@ -94,14 +94,14 @@ export const subscriber = {
         // },
         ...mutations,
         ADD_SUBSCRIBER_EPISODE(state, payload){
-            state.subscriber.episodes.push(payload);
-            console.log('EPISODES NOW IS ', state.subscriber.episodes);
-            console.log(state.subscriber);
+            state.model.episodes.push(payload);
+            console.log('EPISODES NOW IS ', state.model.episodes);
+            console.log(state.model);
         },
         
         DELETE_SUBSCRIPTION(state){
             console.log('REMOVED SUBSCRPTION');
-            state.subscriber.subscriptions = [];
+            state.model.subscriptions = [];
         }
     },
     getters: {

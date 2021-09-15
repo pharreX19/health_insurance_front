@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     selectPlan(plan) {
-      store.commit("policy/SET_PLAN", plan);
+      store.commit("plan/SET_MODEL", plan);
       this.$router.push({ name: "subscriptions-create" });
     },
   },

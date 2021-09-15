@@ -83,11 +83,11 @@ export default {
   // components: { SubscriberServices },
 
   mounted() {
-    this.$store.dispatch("subscriber/get_subscriber", {id: this.$route.params.id, includes: 'plan,subscriptions,company,episodes.services,episodes.serviceProvider,subscriptions'});
+    this.$store.dispatch("subscriber/get_model", `subscribers/${this.$route.params.id}?include=plan,subscriptions,company,episodes.services,episodes.serviceProvider,subscriptions`);
   },
   computed: {
     subscriber() {
-      return this.$store.getters["subscriber/subscriber"];
+      return this.$store.getters["subscriber/model"];
     },
     services(){
       let services = [];

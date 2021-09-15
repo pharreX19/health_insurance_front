@@ -79,10 +79,11 @@ export default {
     }),
     methods: {
       isPolicyExpired() {
-      moment.now() >
+      return (
         moment(this.subscriber.subscriptions[0].expiry_date).format(
-          "MM-DD-YYYY"
-        );
+          "YYYY-MM-DD"
+        ) < moment().format("YYYY-MM-DD")
+      );
     },
     }
   }

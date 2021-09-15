@@ -158,6 +158,12 @@ export default {
       // console.log(policy);
       // return policy.find((item) => item.id === this.$route.params.id);
     },
+    watch: {
+      policy(){
+        console.log('=========');
+        this.selectedPlan = this.policy.plans[0];
+      }
+    }
   },
   data() {
     return {
@@ -172,7 +178,7 @@ export default {
     getPolicy() {
       this.$store.dispatch(
         "policy/get_model",
-        `policies/${this.$route.params.id}?include=plans.services`
+        `policies/${this.$route.params.policy_id}?include=plans.services`
       );
     },
     serviceExistsInPlan(service) {

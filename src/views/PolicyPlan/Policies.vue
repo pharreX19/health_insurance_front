@@ -74,14 +74,14 @@ export default {
     },
     editItem(item){
       this.isEdit = true;
-      this.showPolicyCreateDialog = true;
       this.$store.commit('policy/SET_MODEL', item);
+      this.showPolicyCreateDialog = true;
     },
     deleteItem(item){
       this.$store.dispatch("policy/delete_model", {url: 'policies', id: item.id});
     },
     onClick(item){
-      this.$store.commit('policy/SET_MODEL', item);
+      // this.$store.commit('policy/SET_MODEL', item);
       this.$router.push({name: 'policy-view', params: {id: item.id}});
     },
     viewPolicy(id){

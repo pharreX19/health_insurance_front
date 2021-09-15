@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{plans}}
     <policy-plan-create-edit-dialog
       v-if="showPolicyCreateDialog"
       :dialog.sync="showPolicyCreateDialog"
@@ -71,22 +72,22 @@ export default {
     },
     editItem(item) {
       this.isEdit = true;
+      this.$store.commit("plan/SET_MODEL", item);
       this.showPolicyCreateDialog = true;
-      this.$store.commit("policy/SET_MODEL", item);
     },
     deleteItem(item) {
-      this.$store.dispatch("policy/delete_model", {
-        url: "policies",
+      this.$store.dispatch("plan/delete_model", {
+        url: "plans",
         id: item.id,
       });
     },
     onClick(item) {
-      this.$store.commit("policy/SET_MODEL", item);
-      this.$router.push({ name: "policy-view", params: { id: item.id } });
+      this.$store.commit("plan/SET_MODEL", item);
+      this.$router.push({ name: "plan-view", params: { policy_id: this.$route.params.id, plan_id: item.id } });
     },
-    viewPolicy(id) {
-      this.$router.push({ name: "policy-view", params: { id: id } });
-    },
+    // viewPolicy(id) {
+    //   this.$router.push({ name: "policy-view", params: { id: id } });
+    // },
   },
 };
 </script>

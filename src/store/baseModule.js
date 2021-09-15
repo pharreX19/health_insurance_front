@@ -124,22 +124,27 @@ export const mutations = {
     },
 
     ADD_MODEL(state, data) {
+        console.log(state.models);
         state.models.unshift(data);
     },
 
     UPDATE_MODEL(state, data) {
-        state.models.map((model) => {
-            if (model.id === data.id) {
-                model = data;
-            }
-        })
+        if (state.models.length) {
+            state.models.map((model) => {
+                if (model.id === data.id) {
+                    model = data;
+                }
+            })
+        }
     },
 
     REMOVE_MODEL(state, id) {
-        let temp = state.models.filter((model) => {
-            return model.id != id;
-        })
-        state.models = temp;
+        if (state.models.length) {
+            let temp = state.models.filter((model) => {
+                return model.id != id;
+            })
+            state.models = temp;
+        }
     }
 };
 

@@ -258,7 +258,7 @@ export default {
   mixins: [validation_mixin],
   mounted() {
     this.$store.dispatch("country/get_countries");
-    this.plan_id = (this.$store.getters['policy/plan']).id;
+    this.plan_id = (this.$store.getters['plan/model']).id;
     console.log('plan id is => ', this.plan_id);
     // this.$store.dispatch("policy/get_policies");
   },
@@ -317,7 +317,7 @@ export default {
       if (value.length >= 3) {
         this.loading = true;
         console.log('searching .... ', value);
-        this.$store.dispatch("company/search_company", value);
+        this.$store.dispatch("company/search_model", {url: 'companies/search', data: value});
       } else {
         this.registration = value;
         this.loading = false;
@@ -378,7 +378,7 @@ export default {
       });
       console.log(this.subscribers);
         
-        this.$store.dispatch('subscriber/create_subscriber', this.subscribers).then(() => {
+        this.$store.dispatch('subscriber/create_model', { url: 'subscribers', data: this.subscribers}).then(() => {
           this.removeFile();
           this.subscriber = {};
           this.subscribers = [];
@@ -409,7 +409,7 @@ export default {
       return this.$store.getters["country/countries"];
     },
     companies() {
-      return this.$store.getters["company/companies"];
+      return this.$store.getters["company/model"];
     },
     // policies() {
     //   if (this.plans.length === 0) {

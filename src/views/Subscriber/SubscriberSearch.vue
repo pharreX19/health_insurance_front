@@ -69,12 +69,12 @@ export default {
   },
   methods: {
     searchSubscriber() {
-      this.$store.dispatch("subscriber/search_subscriber", this.identification);
+      this.$store.dispatch("subscriber/search_model", {url: "subscribers/search", data: this.identification});
     },
   },
   computed: {
     subscriber() {
-      return this.$store.getters["subscriber/subscriber"];
+      return this.$store.getters["subscriber/model"];
     },
   },
 };

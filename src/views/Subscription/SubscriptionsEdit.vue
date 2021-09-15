@@ -45,21 +45,21 @@ export default {
   components: {CurrentPlan, NewPlan, SubscriptionHistory },
   created() {
     // if(!this.$store.getters['policy/policies']){
-    this.$store.dispatch("policy/get_policies");
+    this.$store.dispatch("policy/get_models", "policies?include=plans" );
     // }
     this.getSubscriber();
   },
   computed: {
     policies() {
       if (this.plans.length === 0) {
-        this.$store.getters["policy/policies"].map((policy) => {
+        this.$store.getters["policy/models"].map((policy) => {
           this.plans.push(policy.plans);
         });
       }
-      return this.$store.getters["policy/policies"];
+      return this.$store.getters["policy/models"];
     },
     subscriber() {
-      return this.$store.getters["subscriber/subscriber"];
+      return this.$store.getters["subscriber/model"];
     },
   },
 
@@ -81,10 +81,7 @@ export default {
    
 
     getSubscriber() {
-      this.$store.dispatch("subscriber/get_subscriber", {
-        id: this.$route.params.id,
-        includes: "subscriptions,plan",
-      });
+      this.$store.dispatch("subscriber/get_model", `subscribers/${this.$route.params.id}?include=subscriptions,plan`);
     },
 
     

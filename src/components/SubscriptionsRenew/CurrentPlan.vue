@@ -40,7 +40,7 @@
 
       <v-list-item two-line class="text-left mb-2">
         <v-list-item-content>
-          <v-list-item-title :class="{ isExpired: isSubscriptionExpired() }">{{
+          <v-list-item-title :class="[isSubscriptionExpired() ? 'isExpired' : 'isNotExpired']">{{
             moment(subscriber.subscriptions[0].expiry_date).format(
               "MMMM D, YYYY"
             )

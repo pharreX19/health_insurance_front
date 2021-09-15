@@ -127,12 +127,12 @@ export const routes = [
             store.dispatch("plan/get_models", `policies/${to.params.id}?include=plans.serviceLimitGroups`, true).then(() => next());
         }
     },
-    // {   
-    //     path: "/policies/:id",
-    //     component: () => import("../views/Policy/PolicyView.vue"),
-    //     name: "policy-view",
-    //     meta: {authorize: [Role.Admin]}
-    // },
+    {   
+        path: "/policies/:policy_id/plans/:plan_id",
+        component: () => import("../views/PolicyPlan/PolicyPlan.vue"),
+        name: "plan-view",
+        meta: {authorize: [Role.Admin]}
+    },
     {   
         path: "/episodes",
         component: () => import("../views/Episode/Episodes.vue"),

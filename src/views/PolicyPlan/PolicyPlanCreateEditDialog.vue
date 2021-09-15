@@ -3,7 +3,7 @@
     <base-dialog :dialog="dialog" @closeDialog="closeDialog">
       <template #title> {{ isEdit ? "Update" : "Create" }} Policy </template>
       <v-container>
-        {{ serviceLimitGroups }}
+        {{ plan }}
         <v-row>
           <v-col cols="12">
             <v-text-field
@@ -69,7 +69,7 @@
               @blur="handleChange(serviceLimitGroup)"
               label="Amount"
               prefix="MVR"
-              placeholder="0.0"
+              :value="serviceLimitGroup.pivot.limit_total"
             ></v-text-field>
 
             <v-text-field
@@ -79,7 +79,7 @@
               @blur="handleChange(serviceLimitGroup)"
               label="Amount"
               prefix="MVR"
-              placeholder="0.0"
+              placeholder="100.0"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -118,9 +118,9 @@ export default {
     console.log(this.isEdit);
     this.$store.dispatch("serviceLimitGroup/get_service_limit_groups", true);
 
-    // if (this.isEdit) {
-    this.plan = this.$store.getters["policy/model"];
-    // }
+    if (this.isEdit) {
+      this.plan = this.$store.getters["plan/model"];
+    }
   },
   computed: {
     serviceLimitGroups() {
@@ -131,8 +131,9 @@ export default {
         //   });
         //   console.log(temp);
         //   return temp;
+      } else {
+        return this.$store.getters["serviceLimitGroup/serviceLimitGroups"];
       }
-      return this.$store.getters["serviceLimitGroup/serviceLimitGroups"];
     },
   },
   props: {
@@ -206,30 +207,51 @@ export default {
       this.$emit("closeDialog");
     },
     savePlan() {
-      this.plan['policy_id'] = this.$route.params.id;
+      this.plan["policy_id"] = this.$route.params.id;
       if (this.isEdit) {
-        this.$store.dispatch("plan/update_model", {url: `/plans/${this.plan.id}`, data: this.plan}).then((response) => {
-          this.savePlanServiceLimitGroup(response.data.id);
-        });
+        this.$store
+          .dispatch("plan/update_model", {
+            url: "/plans",
+            id: this.plan.id,
+            data: this.plan,
+          })
+          .then(() => {
+            this.savePlanServiceLimitGroup(this.plan.id);
+          });
       } else {
-        this.$store.dispatch("plan/create_model", {url: '/plans', data: this.plan}).then((response) => {
-          this.savePlanServiceLimitGroup(response.data.id);
-        });
+        this.$store
+          .dispatch("plan/create_model", { url: "/plans", data: this.plan })
+          .then((response) => {
+            // console.log(response);
+            this.savePlanServiceLimitGroup(response.data.data.id);
+          });
       }
     },
 
     savePlanServiceLimitGroup(plan_id) {
       if (this.isEdit) {
-        this.$store.dispatch(
-          "plan/update_plan_service_limit_groups",
-          {url: `/plans/${plan_id}/service-limit-groups`, data: this.planServiceLimitGroups}
-        );
+        this.$store
+          .dispatch("plan/add_plan_service_limit_groups", {
+            url: `/plans/${plan_id}/service-limit-groups`,
+            data: this.planServiceLimitGroups,
+          })
+          .then(() => this.fetchPolicyPlans());
       } else {
-        this.$store.dispatch(
-          "plan/add_plan_service_limit_groups",
-          {url: `/plans/${plan_id}/service-limit-groups`, data: this.planServiceLimitGroups}
-        );
+        this.$store.dispatch("plan/add_plan_service_limit_groups", {
+          url: `/plans/${plan_id}/service-limit-groups`,
+          data: this.planServiceLimitGroups,
+        }).then(() => this.fetchPolicyPlans());
       }
+      this.closeDialog();
+    },
+
+    fetchPolicyPlans() {
+      console.log('====> REFETCHING');
+      this.$store.dispatch(
+        "plan/get_models",
+        `policies/${this.$route.params.id}?include=plans.serviceLimitGroups`,
+        true
+      );
     },
   },
 };

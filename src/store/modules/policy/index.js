@@ -20,8 +20,8 @@ import {state} from '../../baseModule';
 // const UPDATE_POLICY = 'UPDATE_POLICY';
 // const REMOVE_POLICY = 'REMOVE_POLICY';
 // const SET_PLAN  = 'SET_PLAN';
-const ADD_SERVICE_TO_PLAN = 'ADD_SERVICE_TO_PLAN';
-const REMOVE_SERVICE_FROM_PLAN = 'REMOVE_SERVICE_FROM_PLAN';
+// const ADD_SERVICE_TO_PLAN = 'ADD_SERVICE_TO_PLAN';
+// const REMOVE_SERVICE_FROM_PLAN = 'REMOVE_SERVICE_FROM_PLAN';
 
 export const policy = {
     namespaced: true,
@@ -80,12 +80,10 @@ export const policy = {
         //     });
         // },
         ...actions,
-        remove_service_from_plan({
-            commit
-        }, payload) {
+        remove_service_from_plan(_, payload) {
             return new Promise((resolve, reject) => {
                 remove(`plans/${payload.planId}/services/${payload.serviceId}/remove`).then(checkResponse).then(() => {
-                    commit(REMOVE_SERVICE_FROM_PLAN, payload);
+                    // commit(REMOVE_SERVICE_FROM_PLAN, payload);
                     resolve(payload);
                 }).catch((error) => {
                     console.log(error)
@@ -94,16 +92,14 @@ export const policy = {
             })
         },
 
-        add_service_to_plan({
-            commit
-        }, payload) {
+        add_service_to_plan(_, payload) {
             return new Promise((resolve, reject) => {
                 post(`plans/${payload.planId}/services/${payload.service.id}/add`, {
                     limit_group_calculation_type_id: payload.calculation_type,
                     limit_total: parseFloat(payload.limit_total)
                 }).then(checkResponse).then(() => {
                     resolve(payload);
-                    commit(ADD_SERVICE_TO_PLAN, payload);
+                    // commit(ADD_SERVICE_TO_PLAN, payload);
                 }).catch((error) => {
                     reject(error);
                     console.log(error)

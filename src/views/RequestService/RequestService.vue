@@ -72,6 +72,9 @@
                 </template>
               </td>
             </template>
+            <template v-slot:item.activity_at="{ item }">
+              {{ moment(item.activity_at).format("MMMM D, YYYY") }}
+            </template>
             <template v-slot:item.add_service="{ item }">
               <v-icon small class="ml-4" @click="addServiceToEpisode(item)">
                 mdi-pencil
@@ -99,8 +102,8 @@
 // import moment from "moment";
 import EpisodeCreateDialog from "./EpisodeCreateDialog.vue";
 import EpisodeServiceAddDialog from "./EpisodeServiceAddDialog.vue";
-import SubscriberDetails from '../../components/common/SubscriberDetails.vue';
-import SubscriberPolicy from '../../components/SubscriberPolicy.vue';
+import SubscriberDetails from "../../components/common/SubscriberDetails.vue";
+import SubscriberPolicy from "../../components/SubscriberPolicy.vue";
 
 export default {
   components: {
@@ -114,7 +117,7 @@ export default {
   },
   computed: {
     subscriber() {
-      return this.$store.getters["subscriber/subscriber"];
+      return this.$store.getters["subscriber/model"];
     },
   },
   data() {
@@ -137,12 +140,11 @@ export default {
     };
   },
   methods: {
-    getSubscriber(){
-      this.$store.dispatch("subscriber/get_subscriber", {
-      id: this.$route.params.id,
-      includes:
-        "plan.services,episodes.serviceProvider,episodes.services,subscriptions",
-    }); //subscriptions,company,episodes.services,episodes.serviceProvider,subscriptions'});
+    getSubscriber() {
+      this.$store.dispatch(
+        "subscriber/get_model",
+        `subscribers/${this.$route.params.id}?include=plan.services,episodes.serviceProvider,episodes.services,subscriptions`
+      ); //subscriptions,company,episodes.services,episodes.serviceProvider,subscriptions'});
     },
 
     createEpisode() {
@@ -172,7 +174,7 @@ export default {
               },
             });
           });
-            this.getSubscriber();
+          this.getSubscriber();
         }
         this.showEpisodeServiceAddDialog = false;
       }
